@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+.test-history{
+    background-color: #eaf6ee;
+    font-family: 'Inter', sans-serif; 
+    height: 100%;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+/* Mẫu nút đáp án */
+.opt-pill {
+    border-radius: 9999px;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    transition: all 0.2s ease;
+}
+.opt-neutral { background-color: #fcece0; border-bottom: 3px solid #e8d6c8; }
+.opt-selected { background-color: #aec3f5; border-bottom: 3px solid #99aedc; }
+.opt-correct { background-color: #d1fae5; border-bottom: 3px solid #a7f3d0; } /* Highlight đáp án đúng */
+
+/* Mẫu nút cam 3D */
+.btn-orange {
+    background: linear-gradient(180deg, #f69522 0%, #e67600 100%);
+    box-shadow: 0 4px 0 #cc6600, 0 8px 15px rgba(230, 118, 0, 0.3);
+    transition: all 0.1s;
+}
+.btn-orange:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #cc6600, 0 4px 10px rgba(230, 118, 0, 0.3);
+}
+
+.fade-in { animation: fadeIn 0.3s ease-out; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
