@@ -6,9 +6,9 @@ import BoxDashBoard from "./BoxDashboard/boxDashBoard";
 export default function QuizDashBoard() {
     const [listTest, setListTest] = useState([]);
     const [testHistory, setTestHistory] = useState([]);
-    const [account, setAccount] = useState({});
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem("user")));
     const [testHistoryDetail,setTestHistoryDetail] = useState({});
-
+    const [listTestDone,setListTestDone] = useState([]);
     function getLevel(level) {
         if (level == "beginner") return "Beginner";
         else if (level == "elementary") return "Elementary";
@@ -19,20 +19,17 @@ export default function QuizDashBoard() {
         return "Master";
     }
 
-    
-
     useEffect(() => {
         fetch("http://localhost:5000/test")
             .then(res => res.json())
             .then(data => {
+            console.log(data);
                 if (data.success) {
                     setListTest(data.listTest);
                 } else {
                     console.log(data.message);
                 }
             })
-        const accountDetail = JSON.parse(localStorage.getItem("user"));
-        setAccount(accountDetail);
     }, [])
 
     return (
@@ -144,13 +141,13 @@ export default function QuizDashBoard() {
                                     <div className="timeline">
                                         {listTest.map((item, index) =>
                                             <div className="timeline-test d-flex justify-between">
-                                                <div key={index} className="timeline-item completed">
+                                                <div key={index} className={`timeline-item ${item.isDone ? "completed" : "active"}`}>
                                                     <div className="timeline-bar"></div>
-                                                    <div className="timeline-dot">✓</div>
+                                                    <div className="timeline-dot">{item.isDone ? "✓" : (index + 1)}</div>
                                                     <div className="timeline-content">
                                                         <div className="timeline-title">{item.testName}</div>
                                                         <div className="timeline-desc">Level: {item.level} |Total Question: {item.totalQuestion} |Time Limit: {item.timeLimit} minute</div>
-                                                        <span className="badge">Completed</span>
+                                                        <span className="badge">{item.isDone ? "Completed" : "In Progress"}</span>
                                                     </div>
                                                 </div>
                                                 <div className="col-1 layer-button">
@@ -158,25 +155,7 @@ export default function QuizDashBoard() {
                                                 </div>    
                                             </div>
                                         )}
-                                        <div className="timeline-item completed">
-                                            <div className="timeline-bar"></div>
-                                            <div className="timeline-dot">✓</div>
-                                            <div className="timeline-content">
-                                                <div className="timeline-title">Chương 1</div>
-                                                <div className="timeline-desc">Writing nâng cao</div>
-                                                <span className="badge">Completed</span>
-                                            </div>
-                                        </div>
-
-                                        <div className="timeline-item active">
-                                            <div className="timeline-bar"></div>
-                                            <div className="timeline-dot">2</div>
-                                            <div className="timeline-content">
-                                                <div className="timeline-title">Chương 2</div>
-                                                <div className="timeline-desc">Speaking AI</div>
-                                                <span className="badge">In Progress</span>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

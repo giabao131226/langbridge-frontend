@@ -50,6 +50,14 @@ const items = [
                 icon: <MdLibraryAdd />
             }
         ]
+    },
+    {
+        label: <Link to = {"roles"}>Nhóm Quyền</Link>,
+        key: "roles"
+    },
+    {
+        label: <Link to = {"permissions"}>Phân Quyền</Link>,
+        key: "permissions"
     }
 ]
 
@@ -64,7 +72,7 @@ export default function Sider() {
         <>
             <div className="sider bg-black bg-white d-flex flex-column justify-start px-4 py-2">
                 <div className="d-flex items-center justify-between text-white">
-                    <span className="header-admin-title">Admin</span>
+                    <Link to = {"/admin"}><span className="header-admin-title">Admin</span></Link>
                     <button className="cursor-pointer bg-transparent border-none font-20 text-white"><MdMenu /></button>
                 </div>
 

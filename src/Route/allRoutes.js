@@ -21,6 +21,10 @@ import QuanLyBaiKiemTra from "../Component/admin/BaiKiemTra/QuanTri/quan-ly-bai-
 import XemChiTiet from "../Component/admin/QuanLyTaiKhoan/XemChiTiet/xem-chi-tiet";
 import MyPost from "../Component/Home/MyPost/myPost";
 import TestHistory from "../Component/QuizDashBoard/History/test-history";
+import TestHistoryDetail from "../Component/QuizDashBoard/TestHistoryDetail/test-history-detail";
+import NhomQuyen from "../Component/admin/Roles/permissions";
+import Create from "../Component/admin/Roles/create/create";
+import Permissions from "../Component/admin/Permissions/permissions";
 
 const routes = [
     {
@@ -64,7 +68,16 @@ const routes = [
                     },
                     {
                         path: "history",
-                        element: <TestHistory />
+                        children: [
+                            {
+                                path: "",
+                                element: <TestHistory />
+                            },
+                            {
+                                path: ":id",
+                                element: <TestHistoryDetail />
+                            }
+                        ]
                     }
                 ]
             },
@@ -72,7 +85,7 @@ const routes = [
     },
     {
         path: "/lam-bai/:id",
-        element: <Test / >
+        element: <Test />
     },
     {
         path: "/admin",
@@ -114,6 +127,25 @@ const routes = [
                         element: <CreateBaiTest />
                     }
                 ]
+            },
+            {
+                "path": "roles",
+                "children": [
+                    {
+                        "path": "",
+                        "element": <NhomQuyen />,
+                    }
+                    ,
+                    {
+                        "path": "create",
+                        "element": <Create />
+                    }
+                ]
+            },
+            {
+                "path": "permissions",
+                "element": <Permissions />
+                
             }
         ]
     },

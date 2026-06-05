@@ -136,16 +136,6 @@ function ViewToDoList() {
             <div className="viewToDoList container-fluid text-algin-start">
                 <div className="container">
                     <div className="d-flex flex-column justify-center">
-                        <form className="col-12 px-0 py-1 d-flex items-center justify-center" onSubmit={submitTaskToDoList}>
-                            <div className="d-flex items-center gap-x-2 col-12 px-2 py-0">
-                                <input type="text" name="conTent" className="addTaskInput font-bold col-6" placeholder="Enter the tasks to be done today..."></input>
-                                <RangePicker onChange={(dates, dateStrings) => {
-                                    setRangeDate(dateStrings);
-                                }} />
-                            </div>
-
-                            <button type="submit" className="button-ToDoList font-bold px-4 py-3 border-none bg-button-ToDoList" style={{ "border-radius": "20px" }}>+ NEW QUEST</button>
-                        </form>
 
                         <div className="viewToDoListMain d-flex justify-center items-center">
 

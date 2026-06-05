@@ -73,8 +73,10 @@ function Home() {
         formData.append("totalLike", 0);
         formData.append("tag", dataUpToServer.tag);
         images.map((item) => {
+            console.log(item);
             formData.append("images", item);
         })
+        console.log(formData);
         fetch("http://localhost:5000/post/create", {
             method: "POST",
             body: formData

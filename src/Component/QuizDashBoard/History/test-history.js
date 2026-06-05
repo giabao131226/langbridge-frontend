@@ -1,100 +1,79 @@
+import { useEffect, useState } from "react"
 import "./test-history.css"
+import { Link } from "react-router-dom";
 export default function TestHistory() {
+
+    const [account, setAccount] = useState(JSON.parse(localStorage.getItem("user")));
+    const [listTest, setListTest] = useState([]);
+    useEffect(() => {
+        fetch(`http://localhost:5000/test-history/${account.id}`)
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.success) {
+                    setListTest(data.listTest);
+                }
+            })
+    }, [])
+
     return (
         <>
-            <div className="test-history flex-1 flex overflow-hidden">
-
-                <main className="flex-1 overflow-y-auto p-6 lg:p-10 relative">
-
-                    <div id="history-view" className="fade-in max-w-4xl mx-auto">
-                        <div className="bg-white rounded-[24px] p-8 shadow-sm mb-8 flex justify-between items-center">
+            <div className="main-wrapper">
+                <main className="content-area">
+                    <div id="history-view" className="fade-in view-max-w">
+                        <div className="card-header">
                             <div>
-                                <h2 className="text-emerald-500 font-bold text-xs uppercase tracking-widest mb-1">
-                                    Overview
-                                </h2>
-
-                                <h1 className="text-3xl font-black text-slate-900 mb-2">
-                                    Learning History
-                                </h1>
-
-                                <p className="text-slate-500">
+                                <h2 className="title-sup m-0">Overview</h2>
+                                <h1 className="title-main m-0">Learning History</h1>
+                                <p className="text-desc m-0">
                                     Xem lại các bài đã làm để nắm vững kiến thức.
                                 </p>
                             </div>
                         </div>
 
-                        <div id="test-list" className="grid grid-cols-1 gap-5">
+
+                        <div id="test-list" className="history-grid">
+                            {listTest.map((item, index) => (
+                                <Link to = {`${item.IDTest._id}`}><div key={index} className="history-item">
+                                    <div className="h-info">
+                                        <div className="h-icon">
+                                            {item.IDTest.language.substring(0, 2).toUpperCase()}
+                                        </div>
+
+                                        <div>
+                                            <span className="h-lang">
+                                                {item.IDTest.language}
+                                            </span>
+
+                                            <h3 className="h-name">
+                                                {item.IDTest.testName}
+                                            </h3>
+
+                                            <p className="h-date">
+                                                <i
+                                                    className="far fa-calendar-alt"
+                                                    style={{ marginRight: "4px" }}
+                                                ></i>
+
+                                                {new Date(item.testTakenAt).toLocaleString("vi-VN")}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="h-result-box">
+                                        <p className="h-result-lbl m-0">
+                                            Result
+                                        </p>
+
+                                        <p className="h-result-val m-0">
+                                            {item.score}
+                                        </p>
+                                    </div>
+                                </div></Link>
+                            ))}
                         </div>
                     </div>
-
-                    <div id="detail-view" className="fade-in hidden max-w-4xl mx-auto">
-
-                        <div className="bg-white rounded-[24px] p-6 shadow-sm mb-6 flex justify-between items-center">
-
-                            <div>
-                                <h2
-                                    className="text-emerald-500 font-bold text-xs uppercase tracking-widest mb-1"
-                                    id="detail-lang"
-                                >
-                                </h2>
-
-                                <h1
-                                    className="text-2xl font-black text-slate-900"
-                                    id="detail-title"
-                                >
-                                </h1>
-                            </div>
-
-                            <div className="bg-[#ffc107] text-slate-900 rounded-[20px] px-6 py-2 font-bold text-center shadow-sm">
-
-                                <div className="text-xs uppercase tracking-tighter opacity-80 mb-0.5">
-                                    Finished
-                                </div>
-
-                                <div
-                                    className="text-sm font-black"
-                                    id="detail-date"
-                                >
-                                </div>
-
-                            </div>
-                        </div>
-
-                        <div id="question-list" className="space-y-6 pb-20">
-                        </div>
-
-                    </div>
-
                 </main>
-
-                <aside className="w-[320px] p-6 hidden xl:block overflow-y-auto z-10 border-l border-emerald-100/50">
-
-                    <div className="bg-white rounded-[24px] p-5 shadow-sm mb-6 flex items-center gap-4">
-
-                        <div className="w-12 h-12 rounded-full bg-slate-100 border-2 border-[#eaf6ee] flex items-center justify-center text-blue-600 font-black text-xl">
-                            MV
-                        </div>
-
-                        <div>
-                            <p className="font-bold text-slate-800">
-                                Minh Vũ
-                            </p>
-
-                            <p className="text-[10px] text-orange-500 font-bold uppercase tracking-wide">
-                                Premium Member
-                            </p>
-                        </div>
-
-                    </div>
-
-                    <div
-                        id="right-panel-content"
-                        className="bg-[#faebe0] rounded-[24px] p-6 shadow-sm sticky top-6"
-                    >
-                    </div>
-
-                </aside>
-
             </div>
         </>
     )
